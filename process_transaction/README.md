@@ -28,3 +28,6 @@ services:
 
 ```
 
+Esse comando rebuilda a imagem docker tipo você mexeu no Dockerfile aí quer que as alterações sejam aplicadas tem que rodar isso
+`docker-compose up -d --build`
+
