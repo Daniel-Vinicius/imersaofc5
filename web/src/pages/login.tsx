@@ -1,0 +1,57 @@
+import { Typography, Box, TextField, Button } from "@mui/material";
+import { useRouter } from "next/dist/client/router";
+import { FormEvent, useState } from "react";
+import axios from "axios";
+
+const LoginPage = () => {
+  const router = useRouter();
+  const [token, setToken] = useState('');
+
+  async function onSubmit(event: FormEvent) {
+    event.preventDefault();
+
+    try {
+      await axios.post(`${process.env.NEXT_PUBLIC_API_HOST}/login`, { token });
+      router.push("/orders");
+    } catch (e) {
+      console.error(e);
+      alert("Login deu zebra!!");
+    }
+  }
+
+  return (
+    <Box
+      sx={{
+        marginTop: 8,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography component="h1" variant="h5">
+        Login
+      </Typography>
+      <Box component="form" onSubmit={onSubmit} sx={{ mt: 1 }}>
+        <TextField
+          id="token"
+          margin="normal"
+          required
+          fullWidth
+          label="Token da conta"
+          value={token}
+          onChange={(e) => setToken(e.target.value)}
+        />
+        <Button
+          type="submit"
+          fullWidth
+          variant="contained"
+          sx={{ mt: 3, mb: 2 }}
+        >
+          Login
+        </Button>
+      </Box>
+    </Box>
+  );
+};
+
+export default LoginPage;
